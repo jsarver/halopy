@@ -22,11 +22,11 @@ class HaloClient:
         token = resp.json()["access_token"]
         self.session.headers["Authorization"] = f"Bearer {token}"
 
-    def _extract_request_params(self, path_endpoint, **kwargs):
+    def _extract_request_params(self, endpoint, **kwargs):
         params = kwargs.copy()
-        path_params = {k: params.pop(k) for k in kwargs if k.lower() in path_endpoint.path_params}
-        query_params = {k: params.pop(k) for k in kwargs if k.lower() in path_endpoint.query_params}
-        return path_params, query_params,params
+        path_params = {k: params.pop(k) for k in list(params) if k.lower() in endpoint.path_params}
+        query_params = {k: params.pop(k) for k in list(params) if k.lower() in endpoint.query_params}
+        return path_params, query_params, params
 
     def request(self, endpoint, output="pretty", **kwargs):
         """
