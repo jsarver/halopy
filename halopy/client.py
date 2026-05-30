@@ -28,35 +28,41 @@ class HaloClient:
         query_params = {k: params.pop(k) for k in kwargs if k.lower() in path_endpoint.query_params}
         return path_params, query_params,params
 
+    def request(self, endpoint, output="pretty", **kwargs):
+        """
+        Send a request to the API.
 
-    def _path_url(self,endpoint):
-        return f"{self.config.base_url}{endpoint.path}"
+        Args:
+            endpoint: The Endpoint object (e.g. Asset.GET, Agent.LIST).
+            output: "pretty" (default), "json", or "raw".
+            **kwargs: Path params, query params, and anything else (e.g. json=).
+        """
+        path_params, query_params, additional_kwargs = self._extract_request_params(endpoint, **kwargs)
+        url = endpoint.url(self.config.base_url, **path_params)
+        response = self.session.request(
+            method=endpoint.method,
+            url=url,
+            params=query_params,
+            **additional_kwargs,
+        )
+        response.raise_for_status()
 
-    def request(self, endpoint_method,prettyprint=False,raw=False,**kwargs):
-        path_params, query_params, additional_kwargs = self._extract_request_params(endpoint_method, **kwargs)
-        url = endpoint_method.url(self.config.base_url, **path_params)
-        response = self.session.request(method=endpoint_method.method,url=url,params=query_params,**additional_kwargs)
-        if raw:
-            print(response.status_code,response.text)
-        elif prettyprint:
-            pprint.pprint(response.json())
-            response = response.json()
-        else:
-            response=response.json()
-        return response
+        if output == "raw":
+            return response
+
+        data = response.json()
+        if output == "pretty":
+            pprint.pprint(data)
+        return data
 
     def get(self, path_endpoint, **kwargs):
-        endpoint_method = path_endpoint.GET
-        return self.request(endpoint_method,**kwargs)
+        return self.request(path_endpoint.GET, **kwargs)
 
     def post(self, path_endpoint, **kwargs):
-        endpoint_method = path_endpoint.POST
-        return self.request(endpoint_method, **kwargs)
+        return self.request(path_endpoint.POST, **kwargs)
 
-    def list(self,path_endpoint,**kwargs):
-        endpoint_method = path_endpoint.LIST
-        return self.request(endpoint_method, **kwargs)
+    def list(self, path_endpoint, **kwargs):
+        return self.request(path_endpoint.LIST, **kwargs)
 
-    def create(self,path_endpoint,json=None):
-        endpoint_method = path_endpoint.CREATE
-        return self.request(endpoint_method, json=json)
+    def create(self, path_endpoint, **kwargs):
+        return self.request(path_endpoint.CREATE, **kwargs)
