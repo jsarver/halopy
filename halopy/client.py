@@ -1,6 +1,6 @@
 import requests
 from halopy.config import HaloConfig
-
+import pprint
 
 class HaloClient:
     def __init__(self, config: HaloConfig):
@@ -32,24 +32,31 @@ class HaloClient:
     def _path_url(self,endpoint):
         return f"{self.config.base_url}{endpoint.path}"
 
-    def request(self, path_endpoint,path_params=None,query_params=None, json=None):
-        url = path_endpoint.url(self.config.base_url,**(path_params or {}))
-        print(url)
-        return self.session.request(method=path_endpoint.method,url=url,params=query_params,json=json)
+    def request(self, endpoint_method,prettyprint=False,raw=False,**kwargs):
+        path_params, query_params, additional_kwargs = self._extract_request_params(endpoint_method, **kwargs)
+        url = endpoint_method.url(self.config.base_url, **path_params)
+        response = self.session.request(method=endpoint_method.method,url=url,params=query_params,**additional_kwargs)
+        if raw:
+            print(response.status_code,response.text)
+        elif prettyprint:
+            pprint.pprint(response.json())
+            response = response.json()
+        else:
+            response=response.json()
+        return response
 
     def get(self, path_endpoint, **kwargs):
         endpoint_method = path_endpoint.GET
-        path_params, query_params ,kwargs = self._extract_request_params(endpoint_method, **kwargs)
-        url = endpoint_method.url(self.config.base_url, **path_params)
-        return self.session.request('GET',url=url,params=query_params,**kwargs)
+        return self.request(endpoint_method,**kwargs)
 
-    def post(self, path, **kwargs):
-        return self.session.post(f"{self.config.base_url}/api{path}", **kwargs)
+    def post(self, path_endpoint, **kwargs):
+        endpoint_method = path_endpoint.POST
+        return self.request(endpoint_method, **kwargs)
 
-    def list(self,endpoint,**kwargs):
-        url = endpoint.LIST.url(self.config.base_url,**kwargs)
-        return self.session.get(f"{url}", **kwargs)
+    def list(self,path_endpoint,**kwargs):
+        endpoint_method = path_endpoint.LIST
+        return self.request(endpoint_method, **kwargs)
 
-    def create(self,endpoint,json=None):
-        url = endpoint.CREATE.url(self.config.base_url)
-        return self.session.post(f"{url}", json=json)
+    def create(self,path_endpoint,json=None):
+        endpoint_method = path_endpoint.CREATE
+        return self.request(endpoint_method, json=json)
