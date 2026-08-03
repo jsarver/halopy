@@ -1,4 +1,6 @@
 import requests
+from requests import HTTPError, RequestException
+
 from halopy.config import HaloConfig
 
 
@@ -16,15 +18,9 @@ class HaloClient:
         self._authenticate()
 
     def _authenticate(self):
-        resp = self.session.post(
-            f"{self.config.base_url}/auth/token",
-            data={
-                "client_id": self.config.client_id,
-                "client_secret": self.config.client_secret,
-                "scope": self.config.scope,
-                "grant_type": self.config.grant_type,
-            },
-        )
+        resp = self.session.post(f"{self.config.base_url}/auth/token",
+            data={"client_id": self.config.client_id, "client_secret": self.config.client_secret,
+                "scope": self.config.scope, "grant_type": self.config.grant_type, }, )
         resp.raise_for_status()
         token = resp.json()["access_token"]
         self.session.headers["Authorization"] = f"Bearer {token}"
@@ -35,18 +31,27 @@ class HaloClient:
 
         Args:
             endpoint: The Endpoint object (e.g. Asset.GET, Agent.LIST).
-            **kwargs: Path params, query params, and anything else (e.g. json=).
+            **kwargs: Path params, query params, and anything else (e.g. JSON=).
         """
+
         path_params, query_params, additional_kwargs = _extract_request_params(endpoint, **kwargs)
         url = endpoint.url(self.config.base_url, **path_params)
-        response = self.session.request(
-            method=endpoint.method,
-            url=url,
-            params=query_params,
-            **additional_kwargs,
-        )
-        response.raise_for_status()
-        return response
+        response = None
+
+        try:
+            response = self.session.request(method=endpoint.method, url=url, params=query_params, **additional_kwargs, )
+            response.raise_for_status()
+            return response
+
+        except HTTPError:
+            assert response is not None
+            print(f"HTTP {response.status_code}: {response.reason}")
+            print(f"Response body: {response.text}")
+            raise
+
+        except RequestException as e:
+            print(f"Request failed: {type(e).__name__}: {e}")
+            raise
 
     def get(self, path_endpoint, **kwargs):
         return self.request(path_endpoint.GET, **kwargs)
