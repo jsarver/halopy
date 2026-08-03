@@ -5,7 +5,8 @@ Do not edit manually — regenerate with generate_paths.py
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+import json
+from dataclasses import dataclass, field, asdict
 
 
 @dataclass(frozen=True)
@@ -25,6 +26,9 @@ class Endpoint:
     def url(self, base: str = "", **kwargs) -> str:
         """Build full URL, formatting path params: ep.url(base, id=42)"""
         return f"{base}/api{self.path.format(**kwargs)}"
+
+    def __str__(self):
+        return json.dumps(asdict(self), indent=2, default=str)
 
 
 class Aisuggestion:
@@ -108,7 +112,8 @@ class Actions:
         summary="Get one Actions",
         description="Use this to return a single instance of Actions. Requires authentication.",
         path_params=["id"],
-        query_params=["agentonly", "emailonly", "includedetails", "includeemail", "mostrecent", "nonsystem", "penultimate", "ticket_id"],
+        query_params=["agentonly", "emailonly", "includedetails", "includeemail", "mostrecent", "nonsystem",
+                      "penultimate", "ticket_id"],
         response_model="Actions",
     )
     LIST = Endpoint(
@@ -116,7 +121,12 @@ class Actions:
         method="GET",
         summary="List of Actions",
         description="Use this to return multiple Actions. Requires authentication.",
-        query_params=["actoutcome", "actoutcomenum", "agentonly", "conversationonly", "count", "datesearch", "enddate", "excludebilling", "excludehiddenfrominternalit", "excludeprivate", "excludesys", "importantonly", "importanttop", "includeagentdetails", "includeattachments", "includefacebookfields", "includehtmlemail", "includehtmlnote", "includenonactionattachments", "includetranslations", "includetwitterfields", "intraticketonly", "ischildnotes", "isrelatednotes", "slaonly", "startdate", "supplieronly", "ticket_id", "timeentriesonly"],
+        query_params=["actoutcome", "actoutcomenum", "agentonly", "conversationonly", "count", "datesearch", "enddate",
+                      "excludebilling", "excludehiddenfrominternalit", "excludeprivate", "excludesys", "importantonly",
+                      "importanttop", "includeagentdetails", "includeattachments", "includefacebookfields",
+                      "includehtmlemail", "includehtmlnote", "includenonactionattachments", "includetranslations",
+                      "includetwitterfields", "intraticketonly", "ischildnotes", "isrelatednotes", "slaonly",
+                      "startdate", "supplieronly", "ticket_id", "timeentriesonly"],
         response_model="Actions_View",
     )
 
@@ -179,7 +189,8 @@ class Address:
         method="GET",
         summary="List of AddressStore",
         description="Use this to return multiple AddressStore. Requires authentication.",
-        query_params=["count", "postcode", "site_id", "type_id", "user_id", "openedafter", "onholdonly", "overrideclientid", "overridesiteid", "overrideuserid"],
+        query_params=["count", "postcode", "site_id", "type_id", "user_id", "openedafter", "onholdonly",
+                      "overrideclientid", "overridesiteid", "overrideuserid"],
     )
 
 
@@ -284,14 +295,24 @@ class Agent:
         summary="Get one Uname",
         description="Use this to return a single instance of Uname. Requires authentication.",
         path_params=["id"],
-        query_params=["clientidoverride", "get_htmldesigner_signature", "getholidayallowance", "includedetails", "isagentconfig", "loadcache"],
+        query_params=["clientidoverride", "get_htmldesigner_signature", "getholidayallowance", "includedetails",
+                      "isagentconfig", "loadcache"],
     )
     LIST = Endpoint(
         path="/Agent",
         method="GET",
         summary="List of Uname",
         description="Use this to return multiple Uname. Requires authentication.",
-        query_params=["activeinactive", "appointmentscreen", "basic_fields_only", "can_edit_only", "client_id", "clientidoverride", "department_id", "departments", "domain", "exchangecalendars", "exclude_membership_info", "excludeAgent", "forcequalmatch", "include_membership_info", "includeapiagents", "includedisabled", "includeenabled", "includenamedcount", "includeroles", "includestatus", "includeunassigned", "is_agent_cache", "integration_type", "linemanagedonly", "linkingagents", "loadcache", "onlinestatuses", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "qualifications", "reassign", "remoteagents", "remoteagenttype", "role", "search", "shiftagentsonly", "showall", "showcounts", "team", "team_id", "teams", "thisAgentOnly", "ticketarea_id", "tickettype_id", "view_id", "withemail"],
+        query_params=["activeinactive", "appointmentscreen", "basic_fields_only", "can_edit_only", "client_id",
+                      "clientidoverride", "department_id", "departments", "domain", "exchangecalendars",
+                      "exclude_membership_info", "excludeAgent", "forcequalmatch", "include_membership_info",
+                      "includeapiagents", "includedisabled", "includeenabled", "includenamedcount", "includeroles",
+                      "includestatus", "includeunassigned", "is_agent_cache", "integration_type", "linemanagedonly",
+                      "linkingagents", "loadcache", "onlinestatuses", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "qualifications", "reassign", "remoteagents", "remoteagenttype", "role", "search",
+                      "shiftagentsonly", "showall", "showcounts", "team", "team_id", "teams", "thisAgentOnly",
+                      "ticketarea_id", "tickettype_id", "view_id", "withemail"],
     )
     LIST_GET = Endpoint(
         path="/Agent/me",
@@ -351,7 +372,8 @@ class Agentimage:
         summary="Get one Uname",
         description="Use this to return a single instance of Uname. Requires authentication.",
         path_params=["id"],
-        query_params=["clientidoverride", "get_htmldesigner_signature", "getholidayallowance", "includedetails", "isagentconfig", "loadcache"],
+        query_params=["clientidoverride", "get_htmldesigner_signature", "getholidayallowance", "includedetails",
+                      "isagentconfig", "loadcache"],
     )
 
 
@@ -475,7 +497,14 @@ class Appointment:
         method="GET",
         summary="List of Appointment",
         description="Use this to return multiple Appointment. Requires authentication.",
-        query_params=["advanced_search", "agents", "appointmentsonly", "assets", "client_id", "end_date", "excludenonticketapptodo", "excluderecurring", "excluderecurringmaster", "getopenjourney", "hidecompleted", "includedeleted", "isrecurringchild", "isrecurringmaster", "locations", "my_approvals", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "recurringchangeonly", "recurringmasterid", "search", "shiftsonly", "showall", "showappointments", "showchanges", "showholidayonce", "showholidays", "showprojects", "showshifts", "start_date", "statuses", "tasksonly", "ticket_id", "toplevel_id", "types", "utcoffset"],
+        query_params=["advanced_search", "agents", "appointmentsonly", "assets", "client_id", "end_date",
+                      "excludenonticketapptodo", "excluderecurring", "excluderecurringmaster", "getopenjourney",
+                      "hidecompleted", "includedeleted", "isrecurringchild", "isrecurringmaster", "locations",
+                      "my_approvals", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2",
+                      "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "recurringchangeonly", "recurringmasterid", "search", "shiftsonly", "showall", "showappointments",
+                      "showchanges", "showholidayonce", "showholidays", "showprojects", "showshifts", "start_date",
+                      "statuses", "tasksonly", "ticket_id", "toplevel_id", "types", "utcoffset"],
     )
     LIST_GET = Endpoint(
         path="/Appointment/Booking",
@@ -552,7 +581,8 @@ class Areaazuretenant:
         method="GET",
         summary="List of AreaAzureTenant",
         description="Use this to return multiple AreaAzureTenant. Requires authentication.",
-        query_params=["azure_tenant_id", "client_id", "details_id", "ignore_decrypt", "notset", "returnalliflinked", "site_id"],
+        query_params=["azure_tenant_id", "client_id", "details_id", "ignore_decrypt", "notset", "returnalliflinked",
+                      "site_id"],
     )
 
 
@@ -640,7 +670,8 @@ class Asset:
         summary="Get one Device",
         description="Use this to return a single instance of Device. Requires authentication.",
         path_params=["id"],
-        query_params=["assettype_id", "includeactivity", "includeallowedstatus", "includedetails", "includediagramdetails", "includehierarchy"],
+        query_params=["assettype_id", "includeactivity", "includeallowedstatus", "includedetails",
+                      "includediagramdetails", "includehierarchy"],
         response_model="Device",
     )
     LIST = Endpoint(
@@ -648,7 +679,20 @@ class Asset:
         method="GET",
         summary="List of Device",
         description="Use this to return multiple Device. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "assetgroup_id", "assetgroups", "assets", "assetstatuses", "assettype", "assettype_id", "assettypes", "bookmarked", "client_id", "client_ids", "columns_id", "consignable", "consignment_id", "contract_id", "contract_id_adding_to", "count", "domotzagents", "excludethese", "globalSearchID", "idonly", "includeactive", "includeallowedstatus", "includeassetfields", "includechildren", "includecolumns", "includeinactive", "includeservices", "includeuser", "integration_tenantids", "integration_type", "inventory_number", "islogonbehalfview", "item_id", "itemstock_id", "kb_id", "lastupdatefromdate", "lastupdatetodate", "licence_id", "linked_to_ticket", "linkedto_id", "mine", "mysite", "noicon", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "previously_selected", "previously_selected_client_id", "previously_selected_site_id", "previously_selected_user_id", "salesorder_id", "salesorder_line", "search", "search_inventory_number_only", "service_id", "service_ids", "site_id", "stockbin_id", "stockbin_ids", "supplier_contract_id", "supplier_id", "suppliercontracts", "ticket_id", "tickettype_id", "user_id", "username", "include_custom_fields"],
+        query_params=["activeinactive", "advanced_search", "assetgroup_id", "assetgroups", "assets", "assetstatuses",
+                      "assettype", "assettype_id", "assettypes", "bookmarked", "client_id", "client_ids", "columns_id",
+                      "consignable", "consignment_id", "contract_id", "contract_id_adding_to", "count", "domotzagents",
+                      "excludethese", "globalSearchID", "idonly", "includeactive", "includeallowedstatus",
+                      "includeassetfields", "includechildren", "includecolumns", "includeinactive", "includeservices",
+                      "includeuser", "integration_tenantids", "integration_type", "inventory_number",
+                      "islogonbehalfview", "item_id", "itemstock_id", "kb_id", "lastupdatefromdate", "lastupdatetodate",
+                      "licence_id", "linked_to_ticket", "linkedto_id", "mine", "mysite", "noicon", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "previously_selected", "previously_selected_client_id",
+                      "previously_selected_site_id", "previously_selected_user_id", "salesorder_id", "salesorder_line",
+                      "search", "search_inventory_number_only", "service_id", "service_ids", "site_id", "stockbin_id",
+                      "stockbin_ids", "supplier_contract_id", "supplier_id", "suppliercontracts", "ticket_id",
+                      "tickettype_id", "user_id", "username", "include_custom_fields"],
         response_model="Device_View",
     )
     LIST_GET = Endpoint(
@@ -668,7 +712,9 @@ class Assetchange:
         method="GET",
         summary="List of DeviceChange",
         description="Use this to return multiple DeviceChange. Requires authentication.",
-        query_params=["asset_id", "count", "idonly", "licence_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "user_id"],
+        query_params=["asset_id", "count", "idonly", "licence_id", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "search", "user_id"],
     )
 
 
@@ -727,14 +773,16 @@ class Assettype:
         summary="Get one Xtype",
         description="Use this to return a single instance of Xtype. Requires authentication.",
         path_params=["id"],
-        query_params=["booking_type", "client_id", "end_date", "fieldsandlayoutonly", "includedetails", "site_id", "start_date"],
+        query_params=["booking_type", "client_id", "end_date", "fieldsandlayoutonly", "includedetails", "site_id",
+                      "start_date"],
     )
     LIST = Endpoint(
         path="/AssetType",
         method="GET",
         summary="List of Xtype",
         description="Use this to return multiple Xtype. Requires authentication.",
-        query_params=["assetgroup_id", "can_create_only", "can_edit_only", "fixedassetgroups", "include_current", "resourcesonly", "setuplist", "tickettype_id", "type"],
+        query_params=["assetgroup_id", "can_create_only", "can_edit_only", "fixedassetgroups", "include_current",
+                      "resourcesonly", "setuplist", "tickettype_id", "type"],
     )
 
 
@@ -744,7 +792,8 @@ class Assettypeinfo:
         method="GET",
         summary="List of Xtype",
         description="Use this to return multiple Xtype. Requires authentication.",
-        query_params=["assetgroup_id", "can_create_only", "can_edit_only", "fixedassetgroups", "include_current", "resourcesonly", "setuplist", "tickettype_id", "type"],
+        query_params=["assetgroup_id", "can_create_only", "can_edit_only", "fixedassetgroups", "include_current",
+                      "resourcesonly", "setuplist", "tickettype_id", "type"],
     )
 
 
@@ -802,7 +851,9 @@ class Attachment:
         method="GET",
         summary="List of Attachment",
         description="Use this to return multiple Attachment. Requires authentication.",
-        query_params=["action_id", "domotzagents", "filetype", "idonly", "isxlsimport", "one_attachment_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "portal", "ticket_id", "token", "type", "unique_id"],
+        query_params=["action_id", "domotzagents", "filetype", "idonly", "isxlsimport", "one_attachment_id", "order",
+                      "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4",
+                      "orderdesc5", "portal", "ticket_id", "token", "type", "unique_id"],
         response_model="Attachment_View",
     )
     LIST_GET = Endpoint(
@@ -1292,7 +1343,8 @@ class Cannedtext:
         method="GET",
         summary="List of CannedText",
         description="Use this to return multiple CannedText. Requires authentication.",
-        query_params=["access_control_level", "agent_id", "department_id", "group_id", "showall", "team_id", "ticketonly"],
+        query_params=["access_control_level", "agent_id", "department_id", "group_id", "showall", "team_id",
+                      "ticketonly"],
     )
 
 
@@ -1389,7 +1441,9 @@ class Chat:
         method="GET",
         summary="List of LiveChatHeader",
         description="Use this to return multiple LiveChatHeader. Requires authentication.",
-        query_params=["after", "chatprofile_id", "checkavailable", "count", "ignore_all_closed", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "teams_conversation_id", "ticket_id"],
+        query_params=["after", "chatprofile_id", "checkavailable", "count", "ignore_all_closed", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "teams_conversation_id", "ticket_id"],
     )
 
 
@@ -1480,7 +1534,8 @@ class Client:
         summary="Get one Area",
         description="Use this to return a single instance of Area. Requires authentication.",
         path_params=["id"],
-        query_params=["domain", "getavailablerts", "includeactivity", "includedetails", "includeperiods", "includeprepay", "tickettype_id"],
+        query_params=["domain", "getavailablerts", "includeactivity", "includedetails", "includeperiods",
+                      "includeprepay", "tickettype_id"],
         response_model="Area",
     )
     LIST = Endpoint(
@@ -1488,7 +1543,15 @@ class Client:
         method="GET",
         summary="List of Area",
         description="Use this to return multiple Area. Requires authentication.",
-        query_params=["accountmanageronly", "activeinactive", "advanced_search", "azureclients", "callplan", "columns_id", "count", "domain", "exclude_internal", "gficlients", "idonly", "includeactive", "includeazuretenants", "includecolumns", "includeinactive", "includeinvoicetemplatename", "includenotes", "includeqbofields", "include_custom_fields", "integration_tenantids", "integration_type", "isjira", "issentinel", "isservicenow", "lastupdatefromdate", "lastupdatetodate", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "search_name_only", "sentinelid", "showcounts", "sitefields", "snowaccountid", "snowclients", "ticketarea_id", "toplevel_id", "view_id"],
+        query_params=["accountmanageronly", "activeinactive", "advanced_search", "azureclients", "callplan",
+                      "columns_id", "count", "domain", "exclude_internal", "gficlients", "idonly", "includeactive",
+                      "includeazuretenants", "includecolumns", "includeinactive", "includeinvoicetemplatename",
+                      "includenotes", "includeqbofields", "include_custom_fields", "integration_tenantids",
+                      "integration_type", "isjira", "issentinel", "isservicenow", "lastupdatefromdate",
+                      "lastupdatetodate", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2",
+                      "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search",
+                      "search_name_only", "sentinelid", "showcounts", "sitefields", "snowaccountid", "snowclients",
+                      "ticketarea_id", "toplevel_id", "view_id"],
         response_model="Area_View",
     )
     LIST_GET = Endpoint(
@@ -1536,7 +1599,11 @@ class Clientcontract:
         method="GET",
         summary="List of ContractHeader",
         description="Use this to return multiple ContractHeader. Requires authentication.",
-        query_params=["client_id", "count", "device_id", "excluderenewed", "includeinactive", "includelastrenewed", "isbillingplansetup", "isoracle", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "pending_recurring_invoice", "search", "site_id", "contract_type", "contract_sub_type", "labour_type"],
+        query_params=["client_id", "count", "device_id", "excluderenewed", "includeinactive", "includelastrenewed",
+                      "isbillingplansetup", "isoracle", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "pending_recurring_invoice", "search", "site_id", "contract_type", "contract_sub_type",
+                      "labour_type"],
         response_model="ContractHeader_View",
     )
 
@@ -1565,7 +1632,9 @@ class Clientprepay:
         method="GET",
         summary="List of PrepayHistory",
         description="Use this to return multiple PrepayHistory. Requires authentication.",
-        query_params=["advanced_search", "billing_date", "client_id", "client_ids", "contract_id", "count", "idonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "ready_for_invoicing", "search"],
+        query_params=["advanced_search", "billing_date", "client_id", "client_ids", "contract_id", "count", "idonly",
+                      "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "ready_for_invoicing", "search"],
     )
 
 
@@ -1595,7 +1664,9 @@ class Configcommit:
         method="GET",
         summary="List of ConfigCommit",
         description="Use this to return multiple ConfigCommit. Requires authentication.",
-        query_params=["advanced_search", "idonly", "instance_id", "notin_instance_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "rollback_commit", "search"],
+        query_params=["advanced_search", "idonly", "instance_id", "notin_instance_id", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "rollback_commit", "search"],
         response_model="ConfigCommit_View",
     )
 
@@ -1697,7 +1768,8 @@ class Consignment:
         method="GET",
         summary="List of ConsignmentHeader",
         description="Use this to return multiple ConsignmentHeader. Requires authentication.",
-        query_params=["count", "idonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
+        query_params=["count", "idonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2",
+                      "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
     )
 
 
@@ -1980,7 +2052,8 @@ class Customintegrationmethod:
         method="GET",
         summary="List of OutboundIntegrationMethod",
         description="Use this to return multiple OutboundIntegrationMethod. Requires authentication.",
-        query_params=["count", "integration_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
+        query_params=["count", "integration_id", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
     )
 
 
@@ -2082,7 +2155,9 @@ class Dashboardlinks:
         method="GET",
         summary="List of DashboardLinks",
         description="Use this to return multiple DashboardLinks. Requires authentication.",
-        query_params=["access_control_level", "count", "in_app", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "showall", "userid"],
+        query_params=["access_control_level", "count", "in_app", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "showall", "userid"],
         response_model="DashboardLinks",
     )
     LIST_GET = Endpoint(
@@ -2105,7 +2180,9 @@ class Dashboardlinksrepository:
         method="GET",
         summary="List of DashboardLinks",
         description="Use this to return multiple DashboardLinks. Requires authentication.",
-        query_params=["access_control_level", "count", "in_app", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "showall", "userid"],
+        query_params=["access_control_level", "count", "in_app", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "showall", "userid"],
     )
 
 
@@ -2369,7 +2446,16 @@ class Emailaddressbook:
         method="GET",
         summary="List of Users",
         description="Use this to return multiple Users. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "allapprovers", "approvers_only", "asset_id", "client_id", "contract_id", "count", "department_id", "exclude_agents", "exclude_defaultsiteusers", "exclude_generaluser", "idonly", "includeactive", "includebillinginfo", "include_custom_fields", "includeinactive", "includename", "includenonserviceaccount", "includenotes", "includeserviceaccount", "integration_type", "is_followers", "is3cxcall", "lastupdatefromdate", "lastupdatetodate", "licence_id", "listagentuserfirst", "myallcustomers", "myarea", "mydepartment", "mysite", "mysitecontact", "mytoplevel", "opp_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "organisation_id", "page_no", "page_size", "pageinate", "role", "search", "search_phonenumbers", "site_id", "supplier_id", "tickettype_id", "toplevel_id", "linked_to_user_id"],
+        query_params=["activeinactive", "advanced_search", "allapprovers", "approvers_only", "asset_id", "client_id",
+                      "contract_id", "count", "department_id", "exclude_agents", "exclude_defaultsiteusers",
+                      "exclude_generaluser", "idonly", "includeactive", "includebillinginfo", "include_custom_fields",
+                      "includeinactive", "includename", "includenonserviceaccount", "includenotes",
+                      "includeserviceaccount", "integration_type", "is_followers", "is3cxcall", "lastupdatefromdate",
+                      "lastupdatetodate", "licence_id", "listagentuserfirst", "myallcustomers", "myarea",
+                      "mydepartment", "mysite", "mysitecontact", "mytoplevel", "opp_id", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "organisation_id", "page_no", "page_size", "pageinate", "role", "search", "search_phonenumbers",
+                      "site_id", "supplier_id", "tickettype_id", "toplevel_id", "linked_to_user_id"],
     )
 
 
@@ -2651,7 +2737,10 @@ class Externallink:
         method="GET",
         summary="List of ExternalLink",
         description="Use this to return multiple ExternalLink. Requires authentication.",
-        query_params=["count", "details_id", "halo_id", "module_id", "module_list", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "table_id", "third_party_desc", "third_party_id", "third_party_secondary_id", "third_party_type"],
+        query_params=["count", "details_id", "halo_id", "module_id", "module_list", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "search", "table_id", "third_party_desc", "third_party_id",
+                      "third_party_secondary_id", "third_party_type"],
     )
 
 
@@ -2763,7 +2852,9 @@ class Feed:
         method="GET",
         summary="List of Feed",
         description="Use this to return multiple Feed. Requires authentication.",
-        query_params=["accountmanager_id", "agent_only", "count", "exclude_private", "followed_only", "newer_than_id", "older_than_id", "one_agent_id", "one_agents_tickets_id", "one_user_id", "related_asset_id", "related_client_id", "related_site_id", "related_user_id", "user_only"],
+        query_params=["accountmanager_id", "agent_only", "count", "exclude_private", "followed_only", "newer_than_id",
+                      "older_than_id", "one_agent_id", "one_agents_tickets_id", "one_user_id", "related_asset_id",
+                      "related_client_id", "related_site_id", "related_user_id", "user_only"],
     )
 
 
@@ -2886,7 +2977,10 @@ class Fieldinfo:
         method="GET",
         summary="List of FieldInfo",
         description="Use this to return multiple FieldInfo. Requires authentication.",
-        query_params=["access_control_level", "domain", "excluderanges", "excludetables", "excludetableself", "extratype", "fieldtype", "fieldtypemultiple", "includecategories", "includedatefields", "includejirafields", "includeremotefields", "includevalues", "inputtype", "isapprovalstep", "isconfig", "iscustomfieldsetup", "systemid", "typeid"],
+        query_params=["access_control_level", "domain", "excluderanges", "excludetables", "excludetableself",
+                      "extratype", "fieldtype", "fieldtypemultiple", "includecategories", "includedatefields",
+                      "includejirafields", "includeremotefields", "includevalues", "inputtype", "isapprovalstep",
+                      "isconfig", "iscustomfieldsetup", "systemid", "typeid"],
         response_model="FieldInfo",
     )
 
@@ -3140,7 +3234,8 @@ class Holiday:
         method="GET",
         summary="List of Holidays",
         description="Use this to return multiple Holidays. Requires authentication.",
-        query_params=["agent_id", "approved_only", "end_date", "entity", "include_apid", "inclusive_end", "inclusive_start", "my_approvals", "start_date", "workdayid"],
+        query_params=["agent_id", "approved_only", "end_date", "entity", "include_apid", "inclusive_end",
+                      "inclusive_start", "my_approvals", "start_date", "workdayid"],
     )
 
 
@@ -3435,7 +3530,8 @@ class Integrationerror:
         method="GET",
         summary="List of IntegrationError",
         description="Use this to return multiple IntegrationError. Requires authentication.",
-        query_params=["count", "detail_id", "module_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
+        query_params=["count", "detail_id", "module_id", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
     )
 
 
@@ -3527,7 +3623,9 @@ class Integrationrequest:
         method="GET",
         summary="List of IntegrationRequest",
         description="Use this to return multiple IntegrationRequest. Requires authentication.",
-        query_params=["count", "detail_id", "inbound_only", "module_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "outbound_only", "page_no", "page_size", "pageinate"],
+        query_params=["count", "detail_id", "inbound_only", "module_id", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "outbound_only",
+                      "page_no", "page_size", "pageinate"],
     )
 
 
@@ -3625,7 +3723,16 @@ class Invoice:
         method="GET",
         summary="List of InvoiceHeader",
         description="Use this to return multiple InvoiceHeader. Requires authentication.",
-        query_params=["advanced_search", "asset_id", "awaiting_approval", "billing_date", "billingcategory_ids", "start_date", "end_date", "datesearch", "client_id", "client_ids", "contract_id", "count", "idonly", "includecredits", "includeinvoices", "includelines", "includepoinvoices", "invoicedateend", "invoicedatestart", "my_approvals", "notpostedonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "paymentstatuses", "postedonly", "purchaseorder_id", "quote_status", "ready_for_invoicing", "recurringinvoice_id", "reviewrequired", "rinvoice_type", "salesorder_id", "search", "sent_status", "site_id", "stripeautopaymentrequired", "ticket_id", "toplevel_id", "user_id", "third_party_id", "xero_id", "quickbooks_id", "include_linked_item_details"],
+        query_params=["advanced_search", "asset_id", "awaiting_approval", "billing_date", "billingcategory_ids",
+                      "start_date", "end_date", "datesearch", "client_id", "client_ids", "contract_id", "count",
+                      "idonly", "includecredits", "includeinvoices", "includelines", "includepoinvoices",
+                      "invoicedateend", "invoicedatestart", "my_approvals", "notpostedonly", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "paymentstatuses", "postedonly", "purchaseorder_id",
+                      "quote_status", "ready_for_invoicing", "recurringinvoice_id", "reviewrequired", "rinvoice_type",
+                      "salesorder_id", "search", "sent_status", "site_id", "stripeautopaymentrequired", "ticket_id",
+                      "toplevel_id", "user_id", "third_party_id", "xero_id", "quickbooks_id",
+                      "include_linked_item_details"],
         response_model="InvoiceHeader_View",
     )
     LIST_GET = Endpoint(
@@ -3646,7 +3753,9 @@ class Invoicechange:
         method="GET",
         summary="List of InvoiceChange",
         description="Use this to return multiple InvoiceChange. Requires authentication.",
-        query_params=["count", "idonly", "invoice_id", "line_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "type_id"],
+        query_params=["count", "idonly", "invoice_id", "line_id", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "search", "type_id"],
     )
 
 
@@ -3681,7 +3790,9 @@ class Invoicepayment:
         method="GET",
         summary="List of InvoicePayment",
         description="Use this to return multiple InvoicePayment. Requires authentication.",
-        query_params=["client_id", "count", "intent_id", "invoice_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search"],
+        query_params=["client_id", "count", "intent_id", "invoice_id", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "search"],
     )
 
 
@@ -3707,14 +3818,22 @@ class Item:
         summary="Get one Item",
         description="Use this to return a single instance of Item. Requires authentication.",
         path_params=["id"],
-        query_params=["dbc_company_id", "includedetails", "kashflowtenantid", "qbocompanyid", "sagebusinesscloudtenantid", "xerotenantid"],
+        query_params=["dbc_company_id", "includedetails", "kashflowtenantid", "qbocompanyid",
+                      "sagebusinesscloudtenantid", "xerotenantid"],
     )
     LIST = Endpoint(
         path="/Item",
         method="GET",
         summary="List of Item",
         description="Use this to return multiple Item. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "assetgroup_id", "assetgroups", "assettypes", "autotask_service_items", "count", "dbc_company_id", "exactdivision", "excluderecurring", "includeactive", "includeinactive", "include_custom_fields", "itemservice_id", "itemservicerequestdetails_id", "itemsupplierclientid", "itemsuppliercurrency", "kashflowtenantid", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "qbitemsonly", "qbocompanyid", "recurringonly", "sagebusinesscloudtenantid", "search", "search1", "show_not_in_stock", "stocklocation_id", "supplier_id", "xerotenantid"],
+        query_params=["activeinactive", "advanced_search", "assetgroup_id", "assetgroups", "assettypes",
+                      "autotask_service_items", "count", "dbc_company_id", "exactdivision", "excluderecurring",
+                      "includeactive", "includeinactive", "include_custom_fields", "itemservice_id",
+                      "itemservicerequestdetails_id", "itemsupplierclientid", "itemsuppliercurrency",
+                      "kashflowtenantid", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2",
+                      "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "qbitemsonly",
+                      "qbocompanyid", "recurringonly", "sagebusinesscloudtenantid", "search", "search1",
+                      "show_not_in_stock", "stocklocation_id", "supplier_id", "xerotenantid"],
     )
 
 
@@ -3794,7 +3913,9 @@ class Itemstock:
         method="GET",
         summary="List of ItemStock",
         description="Use this to return multiple ItemStock. Requires authentication.",
-        query_params=["count", "idonly", "item_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "stockbin_id", "stocklocation_id"],
+        query_params=["count", "idonly", "item_id", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "stockbin_id", "stocklocation_id"],
     )
 
 
@@ -3809,7 +3930,9 @@ class Itemstockhistory:
         method="GET",
         summary="List of ItemStockHistory",
         description="Use this to return multiple ItemStockHistory. Requires authentication.",
-        query_params=["count", "idonly", "item_id", "itemstock_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "stockbin_id", "stocklocation_id"],
+        query_params=["count", "idonly", "item_id", "itemstock_id", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "search", "stockbin_id", "stocklocation_id"],
     )
 
 
@@ -3913,7 +4036,11 @@ class Kbarticle:
         method="GET",
         summary="List of KBEntry",
         description="Use this to return multiple KBEntry. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "articletype", "client_id", "count", "device_id", "faqlists", "includeactive", "includeinactive", "key", "language_code", "language_override", "needsreview", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "organisation_id", "page_no", "page_size", "pageinate", "related_to", "related_to_ticket", "search", "site_id", "type"],
+        query_params=["activeinactive", "advanced_search", "articletype", "client_id", "count", "device_id", "faqlists",
+                      "includeactive", "includeinactive", "key", "language_code", "language_override", "needsreview",
+                      "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "organisation_id", "page_no", "page_size", "pageinate", "related_to",
+                      "related_to_ticket", "search", "site_id", "type"],
         response_model="KBEntry_View",
     )
 
@@ -4121,7 +4248,9 @@ class Licencechange:
         method="GET",
         summary="List of LicenceChange",
         description="Use this to return multiple LicenceChange. Requires authentication.",
-        query_params=["change_date", "count", "idonly", "licence_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search"],
+        query_params=["change_date", "count", "idonly", "licence_id", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "search"],
     )
 
 
@@ -4136,7 +4265,9 @@ class Licenseinfo:
         method="GET",
         summary="List of LicenceInfo",
         description="Use this to return multiple LicenceInfo. Requires authentication.",
-        query_params=["advanced_search", "count", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "site_id"],
+        query_params=["advanced_search", "count", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "site_id"],
     )
     LIST_GET = Endpoint(
         path="/LicenseInfo/password",
@@ -4182,7 +4313,10 @@ class Lookup:
         method="GET",
         summary="List of Lookup",
         description="Use this to return multiple Lookup. Requires authentication.",
-        query_params=["access_control_level", "assettype_id", "client_id", "clientname", "contract_id", "country_code_id", "dbc_company_id", "domain", "exclude_nocharge", "exclude_nolinkedtypes", "exclude_zero", "iscustomfield", "istree", "lookupid", "ordervaluetype", "outcome_id", "showallcodes", "ticket_id", "unameaprestriction", "use", "use2"],
+        query_params=["access_control_level", "assettype_id", "client_id", "clientname", "contract_id",
+                      "country_code_id", "dbc_company_id", "domain", "exclude_nocharge", "exclude_nolinkedtypes",
+                      "exclude_zero", "iscustomfield", "istree", "lookupid", "ordervaluetype", "outcome_id",
+                      "showallcodes", "ticket_id", "unameaprestriction", "use", "use2"],
         response_model="Lookup",
     )
 
@@ -4660,7 +4794,8 @@ class Notifications:
         method="GET",
         summary="List of EscMsg",
         description="Use this to return multiple EscMsg. Requires authentication.",
-        query_params=["checkhalointegrator", "checknhserver", "clientversion", "count", "newer_than_id", "older_than_id", "page_no", "page_size", "pageinate", "update_shown", "utc_offset"],
+        query_params=["checkhalointegrator", "checknhserver", "clientversion", "count", "newer_than_id",
+                      "older_than_id", "page_no", "page_size", "pageinate", "update_shown", "utc_offset"],
     )
 
 
@@ -4680,7 +4815,8 @@ class Onlinestatus:
     LIST = Endpoint(
         path="/OnlineStatus",
         method="GET",
-        query_params=["TechID", "LastOnlineDate", "IsOnline", "LastOnline", "agent_status", "status_overidden", "fetch_all", "is_logout", "command", "last_active", "is_idle", "idle_warn"],
+        query_params=["TechID", "LastOnlineDate", "IsOnline", "LastOnline", "agent_status", "status_overidden",
+                      "fetch_all", "is_logout", "command", "last_active", "is_idle", "idle_warn"],
     )
 
 
@@ -4710,7 +4846,11 @@ class Opportunities:
         summary="Get one Faults",
         description="Use this to return a single instance of Faults. Requires authentication.",
         path_params=["id"],
-        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email", "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction", "includelastappointment", "includelinkedobjects", "includenextappointment", "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen", "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
+        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email",
+                      "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction",
+                      "includelastappointment", "includelinkedobjects", "includenextappointment",
+                      "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen",
+                      "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
         response_model="Faults",
     )
     LIST = Endpoint(
@@ -4718,7 +4858,45 @@ class Opportunities:
         method="GET",
         summary="List of Faults",
         description="Use this to return multiple Faults. Requires authentication.",
-        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly", "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate", "category_1", "category_2", "category_3", "category_4", "cf_display_values_only", "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id", "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted", "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese", "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged", "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent", "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield", "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread", "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract", "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly", "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname", "includelastaction", "includelastincomingemail", "includelastname", "includelastnote", "includelocked", "includemailbox", "includemailid", "includemyuseronly", "includenextactivitydate", "includenextappointmenttype", "includeparentsubject", "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2", "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer", "includestatus", "includesubmittedonly", "includesupplier", "includetickettype", "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage", "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch", "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier", "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal", "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly", "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size", "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority", "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype", "requesttype_id", "requesttypegroup", "search", "search_details", "search_id", "search_inventory_number", "search_oppcompanyname", "search_oppcontactname", "search_oppemailaddress", "search_release1", "search_release2", "search_release3", "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference", "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id", "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla", "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status", "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name", "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype", "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments", "filetype_filter"],
+        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly",
+                      "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate",
+                      "category_1", "category_2", "category_3", "category_4", "cf_display_values_only",
+                      "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id",
+                      "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted",
+                      "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese",
+                      "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged",
+                      "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent",
+                      "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield",
+                      "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread",
+                      "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract",
+                      "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly",
+                      "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname",
+                      "includelastaction", "includelastincomingemail", "includelastname", "includelastnote",
+                      "includelocked", "includemailbox", "includemailid", "includemyuseronly",
+                      "includenextactivitydate", "includenextappointmenttype", "includeparentsubject",
+                      "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2",
+                      "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer",
+                      "includestatus", "includesubmittedonly", "includesupplier", "includetickettype",
+                      "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage",
+                      "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch",
+                      "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier",
+                      "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal",
+                      "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly",
+                      "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size",
+                      "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority",
+                      "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype",
+                      "requesttype_id", "requesttypegroup", "search", "search_details", "search_id",
+                      "search_inventory_number", "search_oppcompanyname", "search_oppcontactname",
+                      "search_oppemailaddress", "search_release1", "search_release2", "search_release3",
+                      "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference",
+                      "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id",
+                      "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla",
+                      "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status",
+                      "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name",
+                      "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype",
+                      "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments",
+                      "filetype_filter"],
         response_model="Faults_View",
     )
 
@@ -4772,14 +4950,18 @@ class Outcome:
         summary="Get one TOutcome",
         description="Use this to return a single instance of TOutcome. Requires authentication.",
         path_params=["id"],
-        query_params=["action_id", "anon_ticketid", "contract_id", "debug", "includedetails", "invoice_id", "matched_kb_client_id", "matched_kbid", "override_user_id", "purchaseorder_id", "quotation_id", "salesorder_id", "selected_supplier_id", "ticket_id", "token"],
+        query_params=["action_id", "anon_ticketid", "contract_id", "debug", "includedetails", "invoice_id",
+                      "matched_kb_client_id", "matched_kbid", "override_user_id", "purchaseorder_id", "quotation_id",
+                      "salesorder_id", "selected_supplier_id", "ticket_id", "token"],
     )
     LIST = Endpoint(
         path="/Outcome",
         method="GET",
         summary="List of TOutcome",
         description="Use this to return multiple TOutcome. Requires authentication.",
-        query_params=["access_control_level", "debug", "excludesystemactions", "quick_only", "showhidden", "showsystemactions", "slastate", "status", "supplier_id", "supplier_status", "tickettype_id", "workflow_id", "workflow_step"],
+        query_params=["access_control_level", "debug", "excludesystemactions", "quick_only", "showhidden",
+                      "showsystemactions", "slastate", "status", "supplier_id", "supplier_status", "tickettype_id",
+                      "workflow_id", "workflow_step"],
     )
 
 
@@ -4806,7 +4988,9 @@ class Outgoing:
         method="GET",
         summary="List of Outgoing",
         description="Use this to return multiple Outgoing. Requires authentication.",
-        query_params=["count", "idonly", "mailbox_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "status_id"],
+        query_params=["count", "idonly", "mailbox_id", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "status_id"],
     )
 
 
@@ -4824,7 +5008,8 @@ class Outgoingattempt:
         method="GET",
         summary="List of OutgoingAttempt",
         description="Use this to return multiple OutgoingAttempt. Requires authentication.",
-        query_params=["count", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "outgoing_id", "page_no", "page_size", "pageinate"],
+        query_params=["count", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "outgoing_id", "page_no", "page_size", "pageinate"],
     )
 
 
@@ -5053,7 +5238,9 @@ class Powershellscriptprocessing:
         method="GET",
         summary="List of PowerShellScriptProcessing",
         description="Use this to return multiple PowerShellScriptProcessing. Requires authentication.",
-        query_params=["count", "includeparameters", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "outstandingonly", "page_no", "page_size", "pageinate", "script_id", "ticket_id"],
+        query_params=["count", "includeparameters", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "outstandingonly", "page_no", "page_size",
+                      "pageinate", "script_id", "ticket_id"],
     )
 
 
@@ -5185,7 +5372,11 @@ class Projects:
         summary="Get one Faults",
         description="Use this to return a single instance of Faults. Requires authentication.",
         path_params=["id"],
-        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email", "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction", "includelastappointment", "includelinkedobjects", "includenextappointment", "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen", "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
+        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email",
+                      "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction",
+                      "includelastappointment", "includelinkedobjects", "includenextappointment",
+                      "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen",
+                      "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
         response_model="Faults",
     )
     LIST = Endpoint(
@@ -5193,7 +5384,45 @@ class Projects:
         method="GET",
         summary="List of Faults",
         description="Use this to return multiple Faults. Requires authentication.",
-        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly", "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate", "category_1", "category_2", "category_3", "category_4", "cf_display_values_only", "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id", "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted", "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese", "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged", "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent", "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield", "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread", "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract", "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly", "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname", "includelastaction", "includelastincomingemail", "includelastname", "includelastnote", "includelocked", "includemailbox", "includemailid", "includemyuseronly", "includenextactivitydate", "includenextappointmenttype", "includeparentsubject", "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2", "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer", "includestatus", "includesubmittedonly", "includesupplier", "includetickettype", "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage", "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch", "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier", "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal", "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly", "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size", "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority", "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype", "requesttype_id", "requesttypegroup", "search", "search_details", "search_id", "search_inventory_number", "search_oppcompanyname", "search_oppcontactname", "search_oppemailaddress", "search_release1", "search_release2", "search_release3", "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference", "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id", "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla", "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status", "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name", "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype", "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments", "filetype_filter"],
+        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly",
+                      "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate",
+                      "category_1", "category_2", "category_3", "category_4", "cf_display_values_only",
+                      "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id",
+                      "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted",
+                      "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese",
+                      "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged",
+                      "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent",
+                      "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield",
+                      "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread",
+                      "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract",
+                      "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly",
+                      "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname",
+                      "includelastaction", "includelastincomingemail", "includelastname", "includelastnote",
+                      "includelocked", "includemailbox", "includemailid", "includemyuseronly",
+                      "includenextactivitydate", "includenextappointmenttype", "includeparentsubject",
+                      "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2",
+                      "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer",
+                      "includestatus", "includesubmittedonly", "includesupplier", "includetickettype",
+                      "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage",
+                      "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch",
+                      "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier",
+                      "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal",
+                      "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly",
+                      "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size",
+                      "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority",
+                      "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype",
+                      "requesttype_id", "requesttypegroup", "search", "search_details", "search_id",
+                      "search_inventory_number", "search_oppcompanyname", "search_oppcontactname",
+                      "search_oppemailaddress", "search_release1", "search_release2", "search_release3",
+                      "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference",
+                      "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id",
+                      "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla",
+                      "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status",
+                      "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name",
+                      "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype",
+                      "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments",
+                      "filetype_filter"],
         response_model="Faults_View",
     )
 
@@ -5251,7 +5480,11 @@ class Purchaseorder:
         method="GET",
         summary="List of SupplierOrderHeader",
         description="Use this to return multiple SupplierOrderHeader. Requires authentication.",
-        query_params=["awaiting_approval", "awaitingstock", "client_id", "closed", "count", "deliver_to_us", "deliver_to_user_salesorder_id", "my_approvals", "open", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "po_status", "salesorder_id", "search", "site_id", "supplier_id", "ticket_id", "unsent", "user_id"],
+        query_params=["awaiting_approval", "awaitingstock", "client_id", "closed", "count", "deliver_to_us",
+                      "deliver_to_user_salesorder_id", "my_approvals", "open", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate", "po_status", "salesorder_id", "search", "site_id", "supplier_id",
+                      "ticket_id", "unsent", "user_id"],
         response_model="SupplierOrderHeader_View",
     )
 
@@ -5343,7 +5576,11 @@ class Quotation:
         method="GET",
         summary="List of QuotationHeader",
         description="Use this to return multiple QuotationHeader. Requires authentication.",
-        query_params=["awaiting_approval", "client_id", "closed", "count", "currentclientorall", "includelines", "my_approvals", "needsprocessing", "open", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "processed", "quote_status", "search", "site_id", "ticket_id", "user_id", "filetype_filter"],
+        query_params=["awaiting_approval", "client_id", "closed", "count", "currentclientorall", "includelines",
+                      "my_approvals", "needsprocessing", "open", "order", "order2", "order3", "order4", "order5",
+                      "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size",
+                      "pageinate", "processed", "quote_status", "search", "site_id", "ticket_id", "user_id",
+                      "filetype_filter"],
         response_model="QuotationHeader_View",
     )
 
@@ -5411,7 +5648,16 @@ class Recurringinvoice:
         method="GET",
         summary="List of InvoiceHeader",
         description="Use this to return multiple InvoiceHeader. Requires authentication.",
-        query_params=["advanced_search", "asset_id", "awaiting_approval", "billing_date", "billingcategory_ids", "start_date", "end_date", "datesearch", "client_id", "client_ids", "contract_id", "count", "idonly", "includecredits", "includeinvoices", "includelines", "includepoinvoices", "invoicedateend", "invoicedatestart", "my_approvals", "notpostedonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "paymentstatuses", "postedonly", "purchaseorder_id", "quote_status", "ready_for_invoicing", "recurringinvoice_id", "reviewrequired", "rinvoice_type", "salesorder_id", "search", "sent_status", "site_id", "stripeautopaymentrequired", "ticket_id", "toplevel_id", "user_id", "third_party_id", "xero_id", "quickbooks_id", "include_linked_item_details"],
+        query_params=["advanced_search", "asset_id", "awaiting_approval", "billing_date", "billingcategory_ids",
+                      "start_date", "end_date", "datesearch", "client_id", "client_ids", "contract_id", "count",
+                      "idonly", "includecredits", "includeinvoices", "includelines", "includepoinvoices",
+                      "invoicedateend", "invoicedatestart", "my_approvals", "notpostedonly", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "paymentstatuses", "postedonly", "purchaseorder_id",
+                      "quote_status", "ready_for_invoicing", "recurringinvoice_id", "reviewrequired", "rinvoice_type",
+                      "salesorder_id", "search", "sent_status", "site_id", "stripeautopaymentrequired", "ticket_id",
+                      "toplevel_id", "user_id", "third_party_id", "xero_id", "quickbooks_id",
+                      "include_linked_item_details"],
         response_model="InvoiceHeader_View",
     )
 
@@ -5449,7 +5695,10 @@ class Release:
         path="/Release",
         method="GET",
         description=". Requires authentication.",
-        query_params=["count", "include_devops_project", "includenotecount", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "product_id", "restrictmyversion", "search", "compare_version_seq", "exclude_releasenote_group_id", "includedetails", "releasenote_group_id"],
+        query_params=["count", "include_devops_project", "includenotecount", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate", "product_id", "restrictmyversion", "search", "compare_version_seq",
+                      "exclude_releasenote_group_id", "includedetails", "releasenote_group_id"],
     )
 
 
@@ -5549,7 +5798,9 @@ class Remotesession:
         method="GET",
         summary="List of RemoteSessionData",
         description="Use this to return multiple RemoteSessionData. Requires authentication.",
-        query_params=["agent", "agent_id", "client_id", "count", "includelinked", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "site_id", "username"],
+        query_params=["agent", "agent_id", "client_id", "count", "includelinked", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate", "search", "site_id", "username"],
     )
 
 
@@ -5586,7 +5837,9 @@ class Report:
         summary="Get one AnalyzerProfile",
         description="Use this to return a single instance of AnalyzerProfile. Requires authentication.",
         path_params=["id"],
-        query_params=["client_id", "clientname", "dashboard_id", "dashboard_published_id", "dontloadsystemreport", "getcompositetoken", "includedetails", "invoice_id", "loadreport", "report_access_token", "reportingperiod", "reportingperiodenddate", "reportingperiodstartdate"],
+        query_params=["client_id", "clientname", "dashboard_id", "dashboard_published_id", "dontloadsystemreport",
+                      "getcompositetoken", "includedetails", "invoice_id", "loadreport", "report_access_token",
+                      "reportingperiod", "reportingperiodenddate", "reportingperiodstartdate"],
         response_model="AnalyzerProfile",
     )
     LIST = Endpoint(
@@ -5594,7 +5847,9 @@ class Report:
         method="GET",
         summary="List of AnalyzerProfile",
         description="Use this to return multiple AnalyzerProfile. Requires authentication.",
-        query_params=["agentrestriction", "chartonly", "clientname", "count", "includepublished", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "reportgroup_id", "search", "type"],
+        query_params=["agentrestriction", "chartonly", "clientname", "count", "includepublished", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "reportgroup_id", "search", "type"],
         response_model="AnalyzerProfile_View",
     )
 
@@ -5614,21 +5869,28 @@ class Reportrepository:
         summary="Get one AnalyzerProfile",
         description="Use this to return a single instance of AnalyzerProfile. Requires authentication.",
         path_params=["id"],
-        query_params=["client_id", "clientname", "dashboard_id", "dashboard_published_id", "dontloadsystemreport", "getcompositetoken", "includedetails", "invoice_id", "loadreport", "report_access_token", "reportingperiod", "reportingperiodenddate", "reportingperiodstartdate"],
+        query_params=["client_id", "clientname", "dashboard_id", "dashboard_published_id", "dontloadsystemreport",
+                      "getcompositetoken", "includedetails", "invoice_id", "loadreport", "report_access_token",
+                      "reportingperiod", "reportingperiodenddate", "reportingperiodstartdate"],
     )
     LIST = Endpoint(
         path="/ReportRepository",
         method="GET",
         summary="List of AnalyzerProfile",
         description="Use this to return multiple AnalyzerProfile. Requires authentication.",
-        query_params=["agentrestriction", "chartonly", "clientname", "count", "includepublished", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "reportgroup_id", "search", "type"],
+        query_params=["agentrestriction", "chartonly", "clientname", "count", "includepublished", "order", "order2",
+                      "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "reportgroup_id", "search", "type"],
     )
     LIST_GET = Endpoint(
         path="/ReportRepository/ReportCategories",
         method="GET",
         summary="List of Lookup",
         description="Use this to return multiple Lookup. Requires authentication.",
-        query_params=["access_control_level", "assettype_id", "client_id", "clientname", "contract_id", "country_code_id", "dbc_company_id", "domain", "exclude_nocharge", "exclude_nolinkedtypes", "exclude_zero", "iscustomfield", "istree", "lookupid", "ordervaluetype", "outcome_id", "showallcodes", "ticket_id", "unameaprestriction", "use", "use2"],
+        query_params=["access_control_level", "assettype_id", "client_id", "clientname", "contract_id",
+                      "country_code_id", "dbc_company_id", "domain", "exclude_nocharge", "exclude_nolinkedtypes",
+                      "exclude_zero", "iscustomfield", "istree", "lookupid", "ordervaluetype", "outcome_id",
+                      "showallcodes", "ticket_id", "unameaprestriction", "use", "use2"],
     )
 
 
@@ -5649,7 +5911,8 @@ class Roadmap:
         path="/Roadmap",
         method="GET",
         description=". Requires authentication.",
-        query_params=["halocrm", "haloitsm", "halopsa", "haloservicedesk", "order", "orderdesc", "product_id", "roadmapcolumnview"],
+        query_params=["halocrm", "haloitsm", "halopsa", "haloservicedesk", "order", "orderdesc", "product_id",
+                      "roadmapcolumnview"],
     )
 
 
@@ -5869,7 +6132,11 @@ class Salesorder:
         method="GET",
         summary="List of OrderHead",
         description="Use this to return multiple OrderHead. Requires authentication.",
-        query_params=["advanced_search", "billing_date", "client_id", "client_ids", "closed", "count", "idonly", "needsconsigning", "needsinvoicing", "needsordering", "open", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "quote_status", "ready_for_invoicing", "search", "site_id", "ticket_id", "toplevel_id", "user_id"],
+        query_params=["advanced_search", "billing_date", "client_id", "client_ids", "closed", "count", "idonly",
+                      "needsconsigning", "needsinvoicing", "needsordering", "open", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "page_no", "page_size", "pageinate", "quote_status", "ready_for_invoicing", "search", "site_id",
+                      "ticket_id", "toplevel_id", "user_id"],
         response_model="OrderHead_View",
     )
 
@@ -6108,7 +6375,12 @@ class Service:
         method="GET",
         summary="List of ServSite",
         description="Use this to return multiple ServSite. Requires authentication.",
-        query_params=["access_control_level", "asset_ids", "count", "includechildservices", "includestatusinfo", "itil_ticket_type", "monitoredonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "parent_service_category_id", "relatedservicesonly", "search", "service_category_id", "service_category_ids", "service_status_ids", "subscribedonly", "template_id", "ticket_id", "tickettype_id", "user_id"],
+        query_params=["access_control_level", "asset_ids", "count", "includechildservices", "includestatusinfo",
+                      "itil_ticket_type", "monitoredonly", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "parent_service_category_id", "relatedservicesonly", "search", "service_category_id",
+                      "service_category_ids", "service_status_ids", "subscribedonly", "template_id", "ticket_id",
+                      "tickettype_id", "user_id"],
         response_model="ServSite_View",
     )
 
@@ -6225,7 +6497,8 @@ class Servicestatus:
         method="GET",
         summary="List of ServStatus",
         description="Use this to return multiple ServStatus. Requires authentication.",
-        query_params=["count", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "service_id"],
+        query_params=["count", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "service_id"],
     )
 
 
@@ -6358,7 +6631,14 @@ class Site:
         method="GET",
         summary="List of Site",
         description="Use this to return multiple Site. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "azuresites", "client_id", "contract_id", "count", "exclude_internal", "gfisites", "idonly", "includeactive", "includeaddress", "includeinactive", "includenonstocklocations", "includenoorderstockbin", "includenotes", "includestocklocations", "include_custom_fields", "iscalendarfilter", "item_id_qty", "item_salesorder_id", "item_salesorder_line", "lastupdatefromdate", "lastupdatetodate", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "override_enablestockbins", "page_no", "page_size", "pageinate", "search", "site_id", "sitefields", "stocklocation", "toplevel_id", "user_override"],
+        query_params=["activeinactive", "advanced_search", "azuresites", "client_id", "contract_id", "count",
+                      "exclude_internal", "gfisites", "idonly", "includeactive", "includeaddress", "includeinactive",
+                      "includenonstocklocations", "includenoorderstockbin", "includenotes", "includestocklocations",
+                      "include_custom_fields", "iscalendarfilter", "item_id_qty", "item_salesorder_id",
+                      "item_salesorder_line", "lastupdatefromdate", "lastupdatetodate", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "override_enablestockbins", "page_no", "page_size", "pageinate", "search", "site_id",
+                      "sitefields", "stocklocation", "toplevel_id", "user_override"],
         response_model="Site_View",
     )
     LIST_GET = Endpoint(
@@ -6508,7 +6788,9 @@ class Softwarelicence:
         method="GET",
         summary="List of Licence",
         description="Use this to return multiple Licence. Requires authentication.",
-        query_params=["client_id", "count", "includeinactive", "licence_type", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "site_id", "tenant_id", "toplevelid"],
+        query_params=["client_id", "count", "includeinactive", "licence_type", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate", "search", "site_id", "tenant_id", "toplevelid"],
     )
 
 
@@ -6575,7 +6857,9 @@ class Status:
         method="GET",
         summary="List of TStatus",
         description="Use this to return multiple TStatus. Requires authentication.",
-        query_params=["domain", "excludeclosed", "excludepending", "outcome_id", "showall", "showcounts", "showquickchangeoptions", "split_closed", "ticket_id", "ticket_id_firstchild", "ticketarea_id", "tickettype_group_id", "tickettype_id", "tickettype_ids", "type", "view_id"],
+        query_params=["domain", "excludeclosed", "excludepending", "outcome_id", "showall", "showcounts",
+                      "showquickchangeoptions", "split_closed", "ticket_id", "ticket_id_firstchild", "ticketarea_id",
+                      "tickettype_group_id", "tickettype_id", "tickettype_ids", "type", "view_id"],
     )
 
 
@@ -6683,7 +6967,10 @@ class Supplier:
         method="GET",
         summary="List of Company",
         description="Use this to return multiple Company. Requires authentication.",
-        query_params=["activeinactive", "count", "idonly", "includeactive", "includeinactive", "kashflowtenantid", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "toplevel_id", "xerotenantid"],
+        query_params=["activeinactive", "count", "idonly", "includeactive", "includeinactive", "kashflowtenantid",
+                      "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "toplevel_id",
+                      "xerotenantid"],
         response_model="Company_View",
     )
 
@@ -6719,7 +7006,9 @@ class Suppliercontract:
         method="GET",
         summary="List of Contract",
         description="Use this to return multiple Contract. Requires authentication.",
-        query_params=["count", "includeinactive", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "search", "supplier_id"],
+        query_params=["count", "includeinactive", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "search", "supplier_id"],
         response_model="Contract_View",
     )
 
@@ -6936,13 +7225,15 @@ class Team:
         method="GET",
         summary="List of SectionDetail",
         description="Use this to return multiple SectionDetail. Requires authentication.",
-        query_params=["can_edit_only", "chat_only", "department_id", "domain", "ids", "include_managers", "includeagentsforteams", "includedisabled", "includeenabled", "istree", "memberonly", "mydeps", "myteamsonly", "orderbyseq", "outcome_id", "showall", "showcounts", "ticketarea_id", "type", "view_id"],
+        query_params=["can_edit_only", "chat_only", "department_id", "domain", "ids", "include_managers",
+                      "includeagentsforteams", "includedisabled", "includeenabled", "istree", "memberonly", "mydeps",
+                      "myteamsonly", "orderbyseq", "outcome_id", "showall", "showcounts", "ticketarea_id", "type",
+                      "view_id"],
     )
     LIST_GET = Endpoint(
         path="/Team/Tree",
         method="GET",
     )
-
 
 class Teamimage:
     GET = Endpoint(
@@ -6998,7 +7289,12 @@ class Template:
         method="GET",
         summary="List of StdRequest",
         description="Use this to return multiple StdRequest. Requires authentication.",
-        query_params=["access_control_level", "action_id", "agent_id", "anonanduser", "asset_id", "client_id", "department_id", "domain", "group_id", "include_ticket_id", "includeclients", "includenames", "itil_ticket_type_id", "itil_type", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "parent_template_id", "report_id", "search", "showall", "team_id", "ticket_type_id", "todo_client_id", "todo_only", "type", "types"],
+        query_params=["access_control_level", "action_id", "agent_id", "anonanduser", "asset_id", "client_id",
+                      "department_id", "domain", "group_id", "include_ticket_id", "includeclients", "includenames",
+                      "itil_ticket_type_id", "itil_type", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate",
+                      "parent_template_id", "report_id", "search", "showall", "team_id", "ticket_type_id",
+                      "todo_client_id", "todo_only", "type", "types"],
     )
 
 
@@ -7107,7 +7403,8 @@ class Ticketapproval:
         method="GET",
         summary="List of FaultApproval",
         description="Use this to return multiple FaultApproval. Requires authentication.",
-        query_params=["action_number", "include_agent_details", "include_attachments", "includeapprovaldetails", "mine", "ticket_id"],
+        query_params=["action_number", "include_agent_details", "include_attachments", "includeapprovaldetails", "mine",
+                      "ticket_id"],
     )
 
 
@@ -7181,14 +7478,19 @@ class Tickettype:
         summary="Get one RequestType",
         description="Use this to return a single instance of RequestType. Requires authentication.",
         path_params=["id"],
-        query_params=["can_create_only", "can_edit_only", "debug", "includeconfig", "includedetails", "includekbinfo", "includeteamrestrictions", "isdetailscreen", "isnewticket", "survey_fields", "ticket_id"],
+        query_params=["can_create_only", "can_edit_only", "debug", "includeconfig", "includedetails", "includekbinfo",
+                      "includeteamrestrictions", "isdetailscreen", "isnewticket", "survey_fields", "ticket_id"],
     )
     LIST = Endpoint(
         path="/TicketType",
         method="GET",
         summary="List of RequestType",
         description="Use this to return multiple RequestType. Requires authentication.",
-        query_params=["access_control_level", "anonanduser", "can_create_only", "can_edit_only", "canagentsselect", "canusercreate", "client_id", "domain", "group_id", "include_current", "include_mandatory_field_check", "isquicktimedropdown", "itil_type", "outcome_id", "searchtickets", "showall", "showcounts", "showinactive", "sprints_only", "ticketarea_id", "user_only", "view_id"],
+        query_params=["access_control_level", "anonanduser", "can_create_only", "can_edit_only", "canagentsselect",
+                      "canusercreate", "client_id", "domain", "group_id", "include_current",
+                      "include_mandatory_field_check", "isquicktimedropdown", "itil_type", "outcome_id",
+                      "searchtickets", "showall", "showcounts", "showinactive", "sprints_only", "ticketarea_id",
+                      "user_only", "view_id"],
     )
 
 
@@ -7252,7 +7554,11 @@ class Tickets:
         summary="Get one Faults",
         description="Use this to return a single instance of Faults. Requires authentication.",
         path_params=["id"],
-        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email", "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction", "includelastappointment", "includelinkedobjects", "includenextappointment", "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen", "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
+        query_params=["amailentryid", "assignedto", "consignablelines", "debug", "dodatabaselookup", "email",
+                      "include_auditing", "includeagent", "includechildids", "includedetails", "includelastaction",
+                      "includelastappointment", "includelinkedobjects", "includenextappointment",
+                      "includeparentchangeinfo", "includeparentsubject", "includeseenby", "is_portal", "isdetailscreen",
+                      "ishalolink", "ispreview", "isteams", "nocache", "subject", "ticketidonly", "utcoffset"],
         response_model="Faults",
     )
     LIST = Endpoint(
@@ -7260,7 +7566,45 @@ class Tickets:
         method="GET",
         summary="List of Faults",
         description="Use this to return multiple Faults. Requires authentication.",
-        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly", "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate", "category_1", "category_2", "category_3", "category_4", "cf_display_values_only", "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id", "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted", "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese", "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged", "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent", "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield", "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread", "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract", "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly", "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname", "includelastaction", "includelastincomingemail", "includelastname", "includelastnote", "includelocked", "includemailbox", "includemailid", "includemyuseronly", "includenextactivitydate", "includenextappointmenttype", "includeparentsubject", "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2", "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer", "includestatus", "includesubmittedonly", "includesupplier", "includetickettype", "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage", "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch", "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier", "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal", "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly", "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size", "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority", "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype", "requesttype_id", "requesttypegroup", "search", "search_details", "search_id", "search_inventory_number", "search_oppcompanyname", "search_oppcontactname", "search_oppemailaddress", "search_release1", "search_release2", "search_release3", "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference", "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id", "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla", "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status", "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name", "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype", "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments", "filetype_filter"],
+        query_params=["advanced_search", "agent", "agent_id", "alerttype", "asset_id", "awaitinginput", "billableonly",
+                      "billing_date", "billing_type", "billingcontractid", "calendar_enddate", "calendar_startdate",
+                      "category_1", "category_2", "category_3", "category_4", "cf_display_values_only",
+                      "checkmyticketsonly", "client_id", "client_ids", "client_ref", "closed_only", "columns_id",
+                      "contract_id", "contract_period", "count", "datesearch", "debug", "default_columns", "deleted",
+                      "domain", "enddate", "enddatetime", "excludeslacalcs", "excludethese",
+                      "excludetickettypeallowall", "extraportalfilter", "facebook_id", "fetchgrandchildren", "flagged",
+                      "followedandagents", "ignoremilestonerestriction", "includeaccountmanager", "includeagent",
+                      "includeallopen", "includeappointmentid", "includeapproval", "includeassetkeyfield",
+                      "includeassettype", "includebreached", "includebudgettype", "includechildids", "includechildread",
+                      "includechildren", "includeclosed", "includecolumns", "includecompleted", "includecontract",
+                      "includecountryregion", "includefirstname", "include_custom_fields", "includefollowedonly",
+                      "includehold", "includeinactivetechs", "includeinactiveusers", "includeitilname",
+                      "includelastaction", "includelastincomingemail", "includelastname", "includelastnote",
+                      "includelocked", "includemailbox", "includemailid", "includemyuseronly",
+                      "includenextactivitydate", "includenextappointmenttype", "includeparentsubject",
+                      "includeprojects", "includeread", "includerelatedservices", "includerelease1", "includerelease2",
+                      "includerelease3", "includeservicecategory", "includeslaactiondate", "includeslatimer",
+                      "includestatus", "includesubmittedonly", "includesupplier", "includetickettype",
+                      "includetimetaken", "includetoplevel", "includeviewing", "includeworkflowstage",
+                      "includeworkflowstagenumber", "includuserdepartments", "inlcludeopenchildcount", "invlucebranch",
+                      "ismilestone", "isorion", "isquicktimesearch", "isscom", "isteams", "iszapier",
+                      "itil_requesttype", "itil_requesttype_id", "kanbanviewontheagentapp", "kanbanviewontheportal",
+                      "lastupdatefromdate", "lastupdatetodate", "list_id", "milestone_id", "mine", "nochargeonly",
+                      "notime", "onlytime", "open_only", "order", "order2", "order3", "order4", "order5", "orderdesc",
+                      "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "orion_type", "page_no", "page_size",
+                      "pageinate", "parent_id", "pending_review", "per_action", "prepayorcontractonly", "priority",
+                      "product", "project_ids", "ready_for_invoicing", "related_id", "release_id", "requesttype",
+                      "requesttype_id", "requesttypegroup", "search", "search_details", "search_id",
+                      "search_inventory_number", "search_oppcompanyname", "search_oppcontactname",
+                      "search_oppemailaddress", "search_release1", "search_release2", "search_release3",
+                      "search_releasenote", "search_reportedby", "search_summary", "search_supplier_reference",
+                      "search_user_name", "search_version", "searchactions", "searchthisticketid", "service_id",
+                      "showonroadmap", "third_party_id", "third_party_id_string", "site_id", "sitepostcode", "sla",
+                      "sprint_for_tickettype_id", "sprints", "startandendset", "startdate", "startdatetime", "status",
+                      "status_id", "submittedandagents", "supplier_id", "supplier_status", "team", "team_name",
+                      "ticketarea_id", "ticketcontract_id", "ticketidonly", "ticketids", "ticketlinktype",
+                      "toplevel_id", "unlinked_only", "user_id", "username", "utcoffset", "view_id", "withattachments",
+                      "filetype_filter"],
         response_model="Faults_View",
     )
     LIST_GET = Endpoint(
@@ -7396,7 +7740,10 @@ class Toplevel:
         method="GET",
         summary="List of Tree",
         description="Use this to return multiple Tree. Requires authentication.",
-        query_params=["agent_departments_only", "can_edit_only", "count", "idonly", "include_agents", "include_managers", "include_teams", "isorgchart", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "org_id", "page_no", "page_size", "pageinate", "search", "show_all", "type"],
+        query_params=["agent_departments_only", "can_edit_only", "count", "idonly", "include_agents",
+                      "include_managers", "include_teams", "isorgchart", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "org_id",
+                      "page_no", "page_size", "pageinate", "search", "show_all", "type"],
     )
 
 
@@ -7535,7 +7882,9 @@ class Userchange:
         method="GET",
         summary="List of UserChange",
         description="Use this to return multiple UserChange. Requires authentication.",
-        query_params=["change_date", "count", "exclude_generaluser", "idonly", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate"],
+        query_params=["change_date", "count", "exclude_generaluser", "idonly", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate"],
     )
 
 
@@ -7587,7 +7936,9 @@ class Users:
         summary="Get one Users",
         description="Use this to return a single instance of Users. Requires authentication.",
         path_params=["id"],
-        query_params=["client_id", "client_override", "domain", "includeactivity", "includebillinginfo", "includedetails", "includepopups", "includeusersassets", "issetup", "opp_id", "site_id", "site_override", "supplier_id", "tickettype_id", "username"],
+        query_params=["client_id", "client_override", "domain", "includeactivity", "includebillinginfo",
+                      "includedetails", "includepopups", "includeusersassets", "issetup", "opp_id", "site_id",
+                      "site_override", "supplier_id", "tickettype_id", "username"],
         response_model="Users",
     )
     LIST = Endpoint(
@@ -7595,7 +7946,16 @@ class Users:
         method="GET",
         summary="List of Users",
         description="Use this to return multiple Users. Requires authentication.",
-        query_params=["activeinactive", "advanced_search", "allapprovers", "approvers_only", "asset_id", "client_id", "contract_id", "count", "department_id", "exclude_agents", "exclude_defaultsiteusers", "exclude_generaluser", "idonly", "includeactive", "includebillinginfo", "include_custom_fields", "includeinactive", "includename", "includenonserviceaccount", "includenotes", "includeserviceaccount", "integration_type", "is_followers", "is3cxcall", "lastupdatefromdate", "lastupdatetodate", "licence_id", "listagentuserfirst", "myallcustomers", "myarea", "mydepartment", "mysite", "mysitecontact", "mytoplevel", "opp_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "organisation_id", "page_no", "page_size", "pageinate", "role", "search", "search_phonenumbers", "site_id", "supplier_id", "tickettype_id", "toplevel_id", "linked_to_user_id"],
+        query_params=["activeinactive", "advanced_search", "allapprovers", "approvers_only", "asset_id", "client_id",
+                      "contract_id", "count", "department_id", "exclude_agents", "exclude_defaultsiteusers",
+                      "exclude_generaluser", "idonly", "includeactive", "includebillinginfo", "include_custom_fields",
+                      "includeinactive", "includename", "includenonserviceaccount", "includenotes",
+                      "includeserviceaccount", "integration_type", "is_followers", "is3cxcall", "lastupdatefromdate",
+                      "lastupdatetodate", "licence_id", "listagentuserfirst", "myallcustomers", "myarea",
+                      "mydepartment", "mysite", "mysitecontact", "mytoplevel", "opp_id", "order", "order2", "order3",
+                      "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5",
+                      "organisation_id", "page_no", "page_size", "pageinate", "role", "search", "search_phonenumbers",
+                      "site_id", "supplier_id", "tickettype_id", "toplevel_id", "linked_to_user_id"],
         response_model="Users_View",
     )
     LIST_GET = Endpoint(
@@ -7761,7 +8121,8 @@ class Viewlists:
         method="GET",
         summary="List of ViewLists",
         description="Use this to return multiple ViewLists. Requires authentication.",
-        query_params=["connectedinstance_id", "domain", "globalonly", "istree", "showall", "showallforteam", "showallfortech", "showcounts", "ticketarea_id", "type"],
+        query_params=["connectedinstance_id", "domain", "globalonly", "istree", "showall", "showallforteam",
+                      "showallfortech", "showcounts", "ticketarea_id", "type"],
     )
 
 
@@ -7870,7 +8231,9 @@ class Webhookevent:
         method="GET",
         summary="List of WebhookEvent",
         description="Use this to return multiple WebhookEvent. Requires authentication.",
-        query_params=["automation_id", "count", "idonly", "integrationmethod_id", "order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "webhook_id"],
+        query_params=["automation_id", "count", "idonly", "integrationmethod_id", "order", "order2", "order3", "order4",
+                      "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no",
+                      "page_size", "pageinate", "webhook_id"],
     )
 
 
@@ -8192,7 +8555,8 @@ class Incomingemail:
         method="GET",
         summary="List of IncomingEmail",
         description="Use this to return multiple IncomingEmail. Requires authentication.",
-        query_params=["order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3", "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "showcurrentagentonly"],
+        query_params=["order", "order2", "order3", "order4", "order5", "orderdesc", "orderdesc2", "orderdesc3",
+                      "orderdesc4", "orderdesc5", "page_no", "page_size", "pageinate", "showcurrentagentonly"],
     )
 
 
