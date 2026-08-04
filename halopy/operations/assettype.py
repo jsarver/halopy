@@ -2,7 +2,7 @@
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from halopy.paths import Assettype
+from halopy.api.paths import Assettype
 
 # Tab settings copied between asset types. Identity fields
 # (id, entity_id, tab_id) are never copied; sequence is recomputed.

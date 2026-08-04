@@ -1,5 +1,5 @@
-from halopy.paths import  Agent, Team, Roles, Toplevel
-from halopy.models import UnameSection
+from halopy.api.paths import  Agent, Team, Roles, Toplevel
+from halopy.api.models import UnameSection
 
 
 def create_agent(agent_id, **kwargs):

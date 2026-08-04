@@ -1,5 +1,5 @@
-from halopy.models import DeviceList
-from halopy.paths import Asset
+from halopy.api.models import DeviceList
+from halopy.api.paths import Asset
 
 def extract_results_key(json_payload):
     for key, value in json_payload.items():

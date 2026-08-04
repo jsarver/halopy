@@ -1,4 +1,4 @@
-from halopy.paths import Users
+from halopy.api.paths import Users
 
 def delete_users(client,user_ids):
     for user_id in user_ids:
