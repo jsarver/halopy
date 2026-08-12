@@ -2912,7 +2912,7 @@ class Field:
         summary="Get one Field",
         description="Use this to return a single instance of Field. Requires authentication.",
         path_params=["id"],
-        query_params=["includedetails", "kind"],
+        query_params=["getlookupvalues","includedetails", "kind"],
     )
     LIST = Endpoint(
         path="/Field",
