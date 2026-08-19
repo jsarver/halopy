@@ -1,3 +1,14 @@
+def field_get(name, fields,case_sensitive=False):
+    """
+    takes name of field and field array and returns a dict if found else empty dict
+    """
+    if case_sensitive:
+        lookup={f['name']:f for f in fields}
+    else:
+        lookup={f['name'].lower():f for f in fields}
+        name=name.lower()
+    return lookup.get(name,{})
+
 def list_api_request(client, object_name, pageinate=True, page_size=50, page_no=1, **kwargs):
     if not pageinate:
         return client.list(object_name, pageinate=pageinate, **kwargs).json()
