@@ -1,6 +1,4 @@
 from functools import cache
-
-from halopy.api.models import DeviceList
 from halopy.api.paths import Asset
 from halopy.halo_globals import ASSETSTATUS_LOOKUP_ID
 from halopy.operations.core import list_api_request
@@ -23,6 +21,3 @@ def list_assets(client, assetgroup_id=None, pageinate=True, page_size=50, page_n
                                   page_no=page_no, **kwargs)
     return asset_list
 
-
-def export_asset(device_list: DeviceList):
-    pass
