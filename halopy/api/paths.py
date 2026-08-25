@@ -2969,7 +2969,7 @@ class Fieldinfo:
         summary="Get one FieldInfo",
         description="Use this to return a single instance of FieldInfo. Requires authentication.",
         path_params=["id"],
-        query_params=["entityid", "getlookupvalues", "includedetails", "livecustomfields", "userid"],
+        query_params=["entityid", "getlookupvalues", "includedetails", "livecustomfields", "userid","clientid","siteid"],
         response_model="FieldInfo",
     )
     LIST = Endpoint(
