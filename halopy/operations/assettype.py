@@ -89,7 +89,6 @@ def copy_tab_layout(client, source_assettype_id: int, target_assettype_id: int,
         apply_tab_layout(client, plan)
     return plan
 
-
 def apply_tab_layout(client, plan: TabLayoutPlan) -> None:
     """Write a TabLayoutPlan's tab_config to its target asset type."""
     client.create(Assettype, json=[{"id": plan.target_assettype_id, "tab_config": plan.tab_config}], )
@@ -107,3 +106,14 @@ def generate_assettype_fields(client):
             at_dict.append({"group": group, "assettype": assettype, "asset_field": f['field_name'],
                             'details_display': detail_display, "tab": tab, "tab_group": tab_group})
     return at_dict
+
+def get_tab_id(assettype, name):
+    for tab in assettype['tab_config']:
+        if tab['tab_name'] == name:
+            id = tab['tab_id']
+            return id
+
+
+def get_at_field_index(assettype):
+    return {_f['field_name'].lower(): {'index': assettype['fields'].index(_f), 'name': _f['field_name']} for _f in
+            assettype['fields']}
