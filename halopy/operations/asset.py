@@ -1,7 +1,7 @@
 from functools import cache
 from halopy.api.paths import Asset
 from halopy.halo_globals import ASSETSTATUS_LOOKUP_ID
-from halopy.operations.core import list_api_request
+from halopy.api.core import list_api_request
 from halopy.operations.lookup import get_lookup
 
 @cache
