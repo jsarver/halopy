@@ -21,11 +21,11 @@ def pageination_supported(endpoint: Endpoint, method: str):
     return True
 
 
-def list_record(client: HaloClient, object_name: Endpoint, pageinate: bool = True, page_size: int = 50,
+def list_record(client: HaloClient, object_name: type[any], pageinate: bool = True, page_size: int = 50,
                 page_no: int | None = None, **kwargs):
     if pageination_supported(object_name, 'LIST') and pageinate:
         if page_no:
-            return client.list(object_name, pageinate=pageinate, page_size=page_size, page_no=page_no, **kwargs)
+            return client.list(object_name, pageinate=pageinate, page_size=page_size, page_no=page_no, **kwargs).json()
         else:
             records = []
             page = 1
