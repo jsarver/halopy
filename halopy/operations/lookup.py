@@ -1,5 +1,6 @@
 from functools import cache
 from halopy.api.paths import Field, Lookup, Fieldinfo
+from halopy.api.models import Device,DeviceView,DeviceList
 
 
 @cache
