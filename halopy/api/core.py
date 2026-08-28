@@ -26,8 +26,15 @@ def _get_records(json_response):
     :param json_response:
     :return:
     """
-    result_key = _extract_records_key(json_response)
-    return json_response.get(result_key, []) if result_key else []
+    result_key=None
+    for key, value in json_response.items():
+        if isinstance(value, list):
+            result_key= key
+            break
+    record_count= json_response.get('record_couht')
+    records =  json_response.get(result_key, [])
+
+    return records, record_count
 
 def list_record(client: HaloClient, object_name: type[any], pageinate: bool = True, page_size: int = 50,
                 page_no: int | None = None, **kwargs):
@@ -35,7 +42,8 @@ def list_record(client: HaloClient, object_name: type[any], pageinate: bool = Tr
 
         if page_no:
             response = client.list(object_name, pageinate=pageinate, page_size=page_size, page_no=page_no, **kwargs).json()
-            return _get_records(response)
+            records, total= _get_records(response)
+            return records
         else:
             records = []
             page = 1
@@ -43,20 +51,14 @@ def list_record(client: HaloClient, object_name: type[any], pageinate: bool = Tr
             while True:
                 response = client.list(object_name, pageinate=pageinate, page_size=page_size, page_no=page,
                                        **kwargs).json()
-                batch= _get_records(response)
+                batch,total= _get_records(response)
                 if not batch:
                     break
                 records.extend(batch)
-                if len(batch) < page_size:
+                if total is not None and len(records) >= total:
                     break
                 page += 1
             return records
     else:
         return client.list(object_name, **kwargs).json()
 
-
-def _extract_records_key(json_payload):
-    for key, value in json_payload.items():
-        if isinstance(value, list):
-            return key
-    return None
