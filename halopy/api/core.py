@@ -31,7 +31,7 @@ def _get_records(json_response):
         if isinstance(value, list):
             result_key= key
             break
-    record_count= json_response.get('record_couht')
+    record_count= json_response.get('record_count')
     records =  json_response.get(result_key, [])
 
     return records, record_count
