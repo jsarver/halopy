@@ -15,15 +15,26 @@ class HaloClient:
     def __init__(self, config: HaloConfig):
         self.config = config
         self.session = requests.Session()
-        self._authenticate()
+        self.refresh_token = None
+        self.login()
 
-    def _authenticate(self):
+    def login(self):
         resp = self.session.post(f"{self.config.base_url}/auth/token",
             data={"client_id": self.config.client_id, "client_secret": self.config.client_secret,
                 "scope": self.config.scope, "grant_type": self.config.grant_type, }, )
         resp.raise_for_status()
         token = resp.json()["access_token"]
+        self.refresh_token = resp.json().get("refresh_token", None)
         self.session.headers["Authorization"] = f"Bearer {token}"
+
+    def refresh(self):
+        resp = self.session.post(f"{self.config.base_url}/auth/token",
+                                 data={"client_id": self.config.client_id, 'refresh_token': self.refresh_token,
+                                       "scope": self.config.scope, "grant_type": "refresh_token", }, )
+        token = resp.json()["access_token"]
+        self.refresh_token = resp.json().get("refresh_token", None)
+        self.session.headers["Authorization"] = f"Bearer {token}"
+
 
     def request(self, endpoint, **kwargs):
         """
