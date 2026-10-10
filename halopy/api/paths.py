@@ -1212,7 +1212,7 @@ class Field:
                       query_params=["kind"], )
     GET = Endpoint(path="/Field/{id}", method="GET", summary="Get one Field",
                    description="Use this to return a single instance of Field. Requires authentication.",
-                   path_params=["id"], query_params=["includedetails", "kind"], )
+                   path_params=["id"], query_params=["includedetails", "kind", "getlookupvalues"], )
     LIST = Endpoint(path="/Field", method="GET", summary="List of Field",
                     description="Use this to return multiple Field. Requires authentication.",
                     query_params=["kind", "type_id"], )
