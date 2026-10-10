@@ -18,10 +18,12 @@ def add_agents_to_team(client, team_id, agents):
     client.create(Team, json=[team])
 
 
-def add_teams_to_agent(client, agent_id, teams):
+def add_teams_to_agent(client, agent_id, teams,default_team=None):
     """Adds teams to an agent"""
     agent = client.get(Agent, id=agent_id, includedetails=True).json()
     agent['teams'] = teams
+    if default_team:
+        agent['team'] = default_team
     client.create(Agent, json=[agent])
 
 
