@@ -1,6 +1,5 @@
 import requests
 from requests import HTTPError, RequestException
-
 from halopy.config import HaloConfig
 
 
@@ -17,6 +16,11 @@ class HaloClient:
         self.session = requests.Session()
         self.refresh_token = None
         self.login()
+
+    @classmethod
+    def from_env_file(cls, env_file):
+        config = HaloConfig(_env_file=env_file)
+        return cls(config)
 
     def login(self):
         resp = self.session.post(f"{self.config.base_url}/auth/token",
