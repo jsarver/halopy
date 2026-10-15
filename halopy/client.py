@@ -51,15 +51,13 @@ class HaloClient:
 
         path_params, query_params, additional_kwargs = _extract_request_params(endpoint, **kwargs)
         # TODO: band-aid. Some IDs come back as floats (123.0). Remove once models/generator are cleaned up.
-        for name in endpoint.path_params:
-            value = kwargs.get(name)
+        for name, value in path_params.items():
             if isinstance(value, float):
                 if not value.is_integer():
                     raise ValueError(f"Invalid path param {name}={value}")
-                kwargs[name] = int(value)
+                path_params[name] = int(value)
         url = endpoint.url(self.config.base_url, **path_params)
         response = None
-
         try:
             response = self.session.request(method=endpoint.method, url=url, params=query_params, **additional_kwargs, )
             response.raise_for_status()
